@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>{$user_login} - 销售代理</title>
+	<meta name="keywords" content=""/>
+	<meta name="description" content="">
+	<include file="public@head"/>
+	<style>
+.control-label {
+    font-weight: bold;
+    float: left;
+    width: 70px;
+}
+	</style>
+    </head>
+    <body class="body-white" id="top">
+	<include file="public@nav" />
+	<div class="container tc-main">
+	    <div class="row">
+		<div class="col-md-3">
+		    <include file="public@agentnav"/>
+		</div>
+		<div class="col-md-9">
+		    <div class="tabs">
+			<ul class="nav nav-tabs">
+			    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 跟进代理</a></li>
+			    <li class=""><a href="/agent/childs/agented"><i class="fa fa-home"></i> 合作代理</a></li>
+			</ul>
+			<div class="tab-content">
+			    <div class="tab-pane active" id="one">
+				<form class="well form-inline" method="post" action="{:url('childs/index')}">
+				    姓名:
+				    <input type="text" class="form-control" name="name" style="width: 120px;" value="{$where.name|default=''}" placeholder="请输入姓名">
+				    电话:
+				    <input type="text" class="form-control" name="tel" style="width: 120px;" value="{$where.tel|default=''}" placeholder="请输入电话">
+				    微信:
+				    <input type="text" class="form-control" name="wechat" style="width: 120px;" value="{$where.wechat|default=''}" placeholder="请输入微信">
+				    公司:
+				    <input type="text" class="form-control" name="company" style="width: 120px;" value="{$where.company|default=''}" placeholder="请输入公司">
+				    品牌:
+				    <input type="text" class="form-control" name="brand" style="width: 120px;" value="{$where.brand|default=''}" placeholder="请输入品牌">
+				    <br>
+				    <br>
+				    销售:
+				    <select class="form-control" name="user_id" onchange="selAdd(this)">
+					<option selected disabled>--请选择--</option>
+					<foreach name='childsSel' item='vo' key='k'>
+					<option value='{$k}'>{$vo}</option>
+					</foreach>
+				    </select>
+				    地域:
+				    <select class="form-control" name="address1" onchange="selAdd(this)">
+					<option selected disabled>--请选择--</option>
+					<option value='0'>中国</option>
+				    </select>
+				    <input type="submit" class="btn btn-primary" value="搜索">
+				    <a class="btn btn-danger" href="/agent/childs/index.html">清空</a>
+				</form>
+				<table class="table table-striped">
+				    <thead>
+					<tr>
+					    <th>销售</th>
+					    <th>姓名</th>
+					    <th>电话</th>
+					    <th>微信</th>
+					    <th>公司</th>
+					    <th>地域</th>
+					    <th>品牌</th>
+					    <th>操作</th>
+					</tr>
+				    </thead>
+				    <tbody>
+					<foreach name='list' item='vo'>
+					<tr>
+					    <th scope="row">{$childsSel[$vo.user_id]}</th>
+					    <th scope="row">{$vo.name}</th>
+					    <td>{$vo.tel}</td>
+					    <td>{$vo.wechat}</td>
+					    <td>{$vo.company}</td>
+					    <td>{$vo.address}</td>
+					    <td>{$vo.brand}</td>
+					    <td>
+						<a href="{:url('childs/info',['id'=>$vo.id])}">查看</a>
+					    </td>
+					</tr>
+					</foreach>
+				    </tbody>
+				</table>
+				<div class="pagination">{$list->render()}</div>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <include file="public@footer" />
+	</div>
+	<!-- /container -->
+	<include file="public@scripts" />
+    </body>
+</html>

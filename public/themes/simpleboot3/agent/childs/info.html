@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>{$user_login} - 跟进代理</title>
+	<meta name="keywords" content=""/>
+	<meta name="description" content="">
+	<include file="public@head"/>
+	<style>
+.control-label {
+    font-weight: bold;
+    float: left;
+    width: 70px;
+}
+	</style>
+    </head>
+    <body class="body-white" id="top">
+	<include file="public@nav" />
+	<div class="container tc-main">
+	    <div class="row">
+		<div class="col-md-3">
+		    <include file="public@agentnav"/>
+		</div>
+		<div class="col-md-9">
+		    <div class="tabs">
+			<ul class="nav nav-tabs">
+			    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 代理信息</a></li>
+			</ul>
+			<div class="tab-content">
+			    <div class="tab-pane active" id="one">
+				<h3>{$info.name} <small>{$info.tel}</small> <small>{$info.wechat}</small></h3>
+				<div>{$info.remark}</div>
+				<hr>
+				<div class='row'>
+				    <div class='col-xs-12'>
+					<h4>跟进历史</h4>
+					<table class="table table-striped">
+					    <thead>
+						<tr>
+						    <th>时间</th>
+						    <th>类型</th>
+						    <th>内容</th>
+						</tr>
+					    </thead>
+					    <tbody>
+						<foreach name='list' item='vo'>
+						<tr>
+						    <td width='100'>{$vo.create_time}</td>
+						    <td width='50'>{$vo.type}</td>
+						    <td>{$vo.content}</td>
+						</tr>
+						</foreach>
+					    </tbody>
+					</table>
+					<div class="pagination">{$list->render()}</div>
+				    </div>
+				</div>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <include file="public@footer" />
+	</div>
+	<!-- /container -->
+	<include file="public@scripts" />
+    </body>
+</html>
