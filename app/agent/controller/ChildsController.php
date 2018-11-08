@@ -38,8 +38,15 @@ class ChildsController extends UserBaseController
 	$childs = Db::name('user')->where(['pid'=>$userId])->select();
 	$inArr = $childsSel = [];
 	foreach($childs as $v){
-	    $inArr[] = $v['id'];
 	    $childsSel[$v['id']] = $v['user_nickname'] == ''?$v['user_login']:$v['user_nickname'];
+	    $inArr[] = $v['id'];
+	}
+	if(count($inArr) > 0){
+	    $childChilds = Db::name('user')->where(['pid'=>['in',$inArr]])->select();
+	    foreach($childChilds as $v){
+		$childsSel[$v['id']] = $v['user_nickname'] == ''?$v['user_login']:$v['user_nickname'];
+		$inArr[] = $v['id'];
+	    }
 	}
 	$where['user_id'] = $search['user_id'] = ['in',$inArr];
 	$this->assign('childsSel',$childsSel);
@@ -121,6 +128,9 @@ class ChildsController extends UserBaseController
 	$this->assign('childsSel',$childsSel);
 	if(!empty(input('param.user_id',''))){
 	    $where['user_id'] = $search['user_id'] = input('param.user_id');
+	}
+	if(!empty(input('param.sign_num',''))){
+	    $where['sign_num'] = $search['sign_num'] = input('param.sign_num');
 	}
 	if(!empty($name)){
 	    $where['name'] = $search['name'] = ['like','%'.$name.'%'];

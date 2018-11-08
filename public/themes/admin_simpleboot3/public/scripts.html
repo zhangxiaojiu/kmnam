@@ -1,0 +1,99 @@
+<!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="__TMPL__/public/assets/simpleboot3/bootstrap/js/bootstrap.min.js"></script>
+    <script src="__STATIC__/js/frontend.js"></script>
+	<script>
+	$(function(){
+		$("#main-menu li.dropdown").hover(function(){
+			$(this).addClass("open");
+		},function(){
+			$(this).removeClass("open");
+		});
+		
+		$("#main-menu a").each(function() {
+			if ($(this)[0].href == String(window.location)) {
+				$(this).parentsUntil("#main-menu>ul>li").addClass("active");
+			}
+		});
+		
+		$.post("{:url('user/index/isLogin')}",{},function(data){
+		    console.log(data);
+			if(data.code==1){
+				if(data.data.user.avatar){
+				}
+
+				$("#main-menu-user span.user-nickname").text(data.data.user.user_nickname?data.data.user.user_nickname:data.data.user.user_login);
+				$("#main-menu-user li.login").show();
+                $("#main-menu-user li.offline").hide();
+
+			}
+
+			if(data.code==0){
+                $("#main-menu-user li.login").hide();
+				$("#main-menu-user li.offline").show();
+			}
+
+		});
+
+        ;(function($){
+			$.fn.totop=function(opt){
+				var scrolling=false;
+				return this.each(function(){
+					var $this=$(this);
+					$(window).scroll(function(){
+						if(!scrolling){
+							var sd=$(window).scrollTop();
+							if(sd>100){
+								$this.fadeIn();
+							}else{
+								$this.fadeOut();
+							}
+						}
+					});
+					
+					$this.click(function(){
+						scrolling=true;
+						$('html, body').animate({
+							scrollTop : 0
+						}, 500,function(){
+							scrolling=false;
+							$this.fadeOut();
+						});
+					});
+				});
+			};
+		})(jQuery); 
+		
+		$("#backtotop").totop();
+		
+		
+	});
+	</script>
+
+	<script>
+	    function selAdd(obj){
+		var num = $(obj).attr('name').slice(7);
+		removeOther(parseInt(num)+1);
+		var pid = $(obj).val();
+		$.post('/api/ajax/selChina',{pid:pid},function(data){
+		    var ret = JSON.parse(data);
+		    if(ret['code'] == 1){
+			num = parseInt(num) + 1;
+			var html = "<select class='form-control' name='address"+num+"' onchange='selAdd(this)'><option selected disabled>--请选择--</option>";
+			var list = ret['data'];
+			for(k in list){
+			    html += "<option value='"+list[k]['id']+"'>"+list[k]['name']+"</option>";   
+			}
+			html += "</select>"
+			$(obj).after(html);
+		    }
+		});
+	    }
+	    function removeOther(num){
+		var max = 5;
+		for(var i = num; i <= max; i++){
+		    $("select[name=address"+i+"]").remove();
+		}
+	    }
+	</script>

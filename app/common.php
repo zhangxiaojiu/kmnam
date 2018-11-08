@@ -25,3 +25,7 @@ function getAddress($str){
 	return $ret;
     }
 }
+function getUsernameByid($id){
+    $ret = Db::name('user')->where(['id'=>$id])->value('user_login');
+    return $ret;
+}

@@ -1,0 +1,20 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+	<li class="active"><a>导入代理商信息</a></li>
+    </ul>
+    <form class="js-ajax-for" action="{:url('AdminAfter/import')}" method="post" enctype="multipart/form-data">
+	<div class="form-group">
+	    <input class="form-control" name='agentfile' type='file'>
+	</div>
+	<div class="form-group">
+	    <button type="submit" class="btn btn-primary js-ajax-submit">导入</button>
+	</div>
+    </form>
+   </div>
+<script src="__STATIC__/js/admin.js"></script>
+<include file="public@scripts"/>
+</body>
+</html>
