@@ -128,7 +128,6 @@ class AgentedController extends UserBaseController
 		$ret = Db::name('agented')->insert($data);
 	    }
 	    if($operate == 'edit'){
-		self::checkSignNum($data['sign_num']);
 		self::checkAgentOwn($data['id']);
 		$ret = Db::name('agented')->update($data);
 	    }
