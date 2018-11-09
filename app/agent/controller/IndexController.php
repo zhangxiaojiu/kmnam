@@ -202,7 +202,7 @@ class IndexController extends UserBaseController
 		    if($val == ''){
 			$f++;
 		    }
-		    $res[$row-2][$agent[$column]] = $val;
+		    $res[$row-2][$agent[$column]] = htmlspecialchars($val);
 		}
 		$res[$row-2]['user_id'] = cmf_get_current_user_id();
 		if($f >2){
