@@ -1,38 +1,70 @@
 <include file="public@header"/>
 </head>
 <body>
-<div class="wrap">
-    <ul class="nav nav-tabs">
-	<li class="active"><a>代理商跟进</a></li>
-    </ul>
-    <h3>{$info.name}{$info.sign_num}<small>{$info.tel}|{$info.remark}</small></h3>
+    <div class="wrap">
+	<ul class="nav nav-tabs">
+	    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 代理商跟进</a></li>
+	    <li class=><a href="#two" data-toggle="tab"><i class="fa fa-home"></i> 代理商合作</a></li>
+	</ul>
+	<h3>{$info.name}{$info.sign_num}<small>{$info.tel}|{$info.remark}</small></h3>
 
-    <form method="post" class="js-ajax-form">
-	<table class="table table-hover table-bordered">
-	    <thead>
-		<tr>
-		    <th>销售</th>
-		    <th>时间</th>
-		    <th>类型</th>
-		    <th>内容</th>
-		</tr>
-	    </thead>
-	    <tbody>
-		<foreach name='list' item='vo'>
-		<tr>
-		    <th scope="row">{$vo.user_id|getUsernameByid}</th>
-		    <td>{$vo.create_time}</td>
-		    <td>{$vo.type}</td>
-		    <td>{$vo.content}</td>
-		</tr>
-		</foreach>
-	    </tbody>
+	<div class="tab-content">
+	    <div class="tab-pane active" id="one">
+		<form method="post" class="js-ajax-form">
+		    <table class="table table-hover table-bordered">
+			<thead>
+			    <tr>
+				<th>销售</th>
+				<th>时间</th>
+				<th>类型</th>
+				<th>内容</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <foreach name='list' item='vo'>
+			    <tr>
+				<th scope="row">{$vo.user_id|getUsernameByid}</th>
+				<td>{$vo.create_time}</td>
+				<td>{$vo.type}</td>
+				<td>{$vo.content}</td>
+			    </tr>
+			    </foreach>
+			</tbody>
 
-	</table>
-	<div class="pagination">{$list->render()}</div>
-    </form>
-</div>
-<script src="__STATIC__/js/admin.js"></script>
-<include file="public@scripts"/>
+		    </table>
+		    <div class="pagination">{$list->render()}</div>
+		</form>
+	    </div>
+	    <div class="tab-pane" id="two">
+		<form method="post" class="js-ajax-form">
+		    <table class="table table-hover table-bordered">
+			<thead>
+			    <tr>
+				<th>时间段</th>
+				<th>姓名</th>
+				<th>交易量</th>
+				<th>激活量</th>
+				<th>备注</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <foreach name='detail' item='vo'>
+			    <tr>
+				<th scope="row">{$vo.period}</th>
+				<td>{$vo.name}</td>
+				<td>{$vo.trade}</td>
+				<td>{$vo.active}</td>
+				<td>{$vo.remark}</td>
+			    </tr>
+			    </foreach>
+			</tbody>
+
+		    </table>
+		    <div class="pagination">{$list->render()}</div>
+		</form>
+	    </div>
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<include file="public@scripts"/>
 </body>
 </html>

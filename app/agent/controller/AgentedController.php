@@ -152,6 +152,18 @@ class AgentedController extends UserBaseController
 
 	return $this->fetch();
     }
+    public function detail(){
+        $user = cmf_get_current_user();
+        $this->assign($user);
+	$id = input('param.id',0);
+	$info = Db::name('agented')->find($id);
+	$info['address'] = getAddress($info['address']);
+	$list = Db::name('agentedDetail')->where(['sign_num'=>$info['sign_num']])->order('id desc')->paginate(5);
+	$this->assign('list',$list);
+	$this->assign('info',$info);
+
+	return $this->fetch();
+    }
     public function del(){
 	$id = input('param.id',0);
 	$info = Db::name('agented')->where(['id'=>$id])->setField('state',0);

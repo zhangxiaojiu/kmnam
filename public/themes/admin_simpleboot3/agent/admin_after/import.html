@@ -5,9 +5,11 @@
     <ul class="nav nav-tabs">
 	<li class="active"><a>导入代理商信息</a></li>
     </ul>
-    <form class="js-ajax-for" action="{:url('AdminAfter/import')}" method="post" enctype="multipart/form-data">
+    <h3>示例下载：<small><a href='/static/2.xlsx'>点此下载</a></small></h3>
+    <br>
+    <form class="js-ajax-for" action="{:url('AdminAfter/doImport')}" method="post" enctype="multipart/form-data">
 	<div class="form-group">
-	    <input class="form-control" name='agentfile' type='file'>
+	    <input class="form-control" name='agented_detail' type='file'>
 	</div>
 	<div class="form-group">
 	    <button type="submit" class="btn btn-primary js-ajax-submit">导入</button>

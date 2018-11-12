@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>{$user_login} - 代理历史</title>
+	<meta name="keywords" content=""/>
+	<meta name="description" content="">
+	<include file="public@head"/>
+	<style>
+.control-label {
+    font-weight: bold;
+    float: left;
+    width: 70px;
+}
+	</style>
+    </head>
+    <body class="body-white" id="top">
+	<include file="public@nav" />
+	<div class="container tc-main">
+	    <div class="row">
+		<div class="col-md-3">
+		    <include file="public@agentnav"/>
+		</div>
+		<div class="col-md-9">
+		    <div class="tabs">
+			<ul class="nav nav-tabs">
+			    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 代理历史</a></li>
+			    <li class=><a href="#two" data-toggle="tab"><i class="fa fa-home"></i> 修改信息</a></li>
+			</ul>
+			<div class="tab-content">
+			    <div class="tab-pane active" id="one">
+				<h3>{$info.name} <small>{$info.tel}</small> <small>平台号：{$info.sign_num}</small></h3>
+				<div>{$info.remark}</div>
+				<hr>
+				<div class='row'>
+				    <div class='col-xs-12'>
+					<h4>代理历史</h4>
+					<table class="table table-striped">
+					    <thead>
+						<tr>
+						    <th>时间</th>
+						    <th>交易量</th>
+						    <th>激活量</th>
+						    <th>备注</th>
+						</tr>
+					    </thead>
+					    <tbody>
+						<foreach name='list' item='vo'>
+						<tr>
+						    <td>{$vo.period}</td>
+						    <td>{$vo.trade}</td>
+						    <td>{$vo.active}</td>
+						    <td>{$vo.remark}</td>
+						</tr>
+						</foreach>
+					    </tbody>
+					</table>
+					<div class="pagination">{$list->render()}</div>
+				    </div>
+				</div>
+			    </div>
+			    <div class="tab-pane" id="two">
+				<form class="js-ajax-form" action="{:url('agented/operateAgent',['operate'=>'edit'])}" method="post">
+				    <div class="form-group">
+					<label for="input-name">姓名</label>
+					<input type="text" class="form-control" id="input-name" placeholder="姓名" name="name" value="{$info.name|default=''}" required>
+				    </div>
+				    <div class="form-group">
+					<label for="input-tel">电话</label>
+					<input type="text" class="form-control" id="input-tel" placeholder="电话" name="tel" value="{$info.tel|default=''}" required>
+				    </div>
+				    <div class="form-group">
+					<label for="input-sign_num">平台号</label>
+					<input type="text" class="form-control" id="input-sign_num" placeholder="平台账号" name="sign_num" value="{$info.sign_num|default=''}" required readonly>
+				    </div>
+				    <div class="form-group">
+					<label for="input-wechat">微信</label>
+					<input type="text" class="form-control" id="input-wechat" placeholder="微信" name="wechat" value="{$info.wechat|default=''}">
+				    </div>
+				    <div class="form-group">
+					<label for="input-company">公司</label>
+					<input type="text" class="form-control" id="input-company" placeholder="公司" name="company" value="{$info.company|default=''}" required>
+				    </div>
+				    <div class="form-group">
+					<label for="input-brand">品牌</label>
+					<input type="text" class="form-control" id="input-brand" placeholder="品牌" name="brand" value="{$info.brand|default=''}">
+				    </div>
+				    <div class="form-group">
+					<label for="input-remark">备注</label>
+					<textarea class="form-control" id="input-remark" placeholder="备注" name="remark" value="{$info.remark|default=''}">{$info.remark}
+					</textarea>
+				    </div>
+				    <div class="form-group">
+					<label for="input-address">地域({$info.address})</label>
+					<select class="form-control" name="address1" onchange="selAdd(this)">
+					    <option selected disabled>--请选择--</option>
+					    <option value='0'>中国</option>
+					</select>
+				    </div>
+				    <div class="form-group">
+					<input type='hidden' name='id' value="{$info.id}">
+					<button type="submit" class="btn btn-primary js-ajax-submit">保存</button>
+				    </div>
+				</form>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <include file="public@footer" />
+	</div>
+	<!-- /container -->
+	<include file="public@scripts" />
+    </body>
+</html>
