@@ -193,8 +193,10 @@ class ChildsController extends UserBaseController
 	$id = input('param.id',0);
 	$info = Db::name('agented')->find($id);
 	$info['address'] = getAddress($info['address']);
-	$list = Db::name('agentedFollow')->where(['agent_id'=>$info['id']])->order('id desc')->paginate(5);
+	$list = Db::name('agentedFollow')->where(['agent_id'=>$info['id']])->order('id desc')->paginate(50);
+	$detail = Db::name('agentedDetail')->where(['sign_num'=>$info['sign_num']])->order('id desc')->paginate(50);
 	$this->assign('list',$list);
+	$this->assign('detail',$detail);
 	$this->assign('info',$info);
 
 	return $this->fetch();

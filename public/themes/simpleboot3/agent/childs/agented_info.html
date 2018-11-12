@@ -23,11 +23,12 @@
 		<div class="col-md-9">
 		    <div class="tabs">
 			<ul class="nav nav-tabs">
-			    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 代理信息</a></li>
+			    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 跟进信息</a></li>
+			    <li class=""><a href="#two" data-toggle="tab"><i class="fa fa-home"></i> 代理历史</a></li>
 			</ul>
 			<div class="tab-content">
 			    <div class="tab-pane active" id="one">
-				<h3>{$info.name} <small>{$info.tel}</small> <small>{$info.wechat}</small></h3>
+				<h3>{$info.name} <small>{$info.tel}</small> <small>平台账号：{$info.sign_num}</small></h3>
 				<div>{$info.remark}</div>
 				<hr>
 				<div class='row'>
@@ -47,6 +48,37 @@
 						    <td width='100'>{$vo.create_time}</td>
 						    <td width='50'>{$vo.type}</td>
 						    <td>{$vo.content}</td>
+						</tr>
+						</foreach>
+					    </tbody>
+					</table>
+					<div class="pagination">{$list->render()}</div>
+				    </div>
+				</div>
+			    </div>
+			    <div class="tab-pane" id="two">
+				<h3>{$info.name} <small>{$info.tel}</small> <small>平台账号：{$info.sign_num}</small></h3>
+				<div>{$info.remark}</div>
+				<hr>
+				<div class='row'>
+				    <div class='col-xs-12'>
+					<h4>跟进历史</h4>
+					<table class="table table-striped">
+					    <thead>
+						<tr>
+						    <th>时间段</th>
+						    <th>交易量</th>
+						    <th>激活量</th>
+						    <th>备注</th>
+						</tr>
+					    </thead>
+					    <tbody>
+						<foreach name='detail' item='vo'>
+						<tr>
+						    <td>{$vo.period}</td>
+						    <td>{$vo.trade}</td>
+						    <td>{$vo.active}</td>
+						    <td>{$vo.remark}</td>
 						</tr>
 						</foreach>
 					    </tbody>
