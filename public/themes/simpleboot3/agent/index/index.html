@@ -17,10 +17,10 @@
 	<include file="public@nav" />
 	<div class="container tc-main">
 	    <div class="row">
-		<div class="col-md-3">
+		<div class="col-md-2">
 		    <include file="public@agentnav"/>
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-10">
 		    <div class="tabs">
 			<ul class="nav nav-tabs">
 			    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 我的代理</a></li>
@@ -52,10 +52,12 @@
 				<table class="table table-striped">
 				    <thead>
 					<tr>
+					    <th> </th>
 					    <th>姓名</th>
 					    <th>电话</th>
 					    <th>微信</th>
 					    <th>公司</th>
+					    <th>时间</th>
 					    <th>地域</th>
 					    <th>品牌</th>
 					    <th>操作</th>
@@ -64,15 +66,18 @@
 				    <tbody>
 					<foreach name='list' item='vo'>
 					<tr>
+					    <td><eq name='vo.star' value='1'><i class="fa fa-star"></i></eq></td>
 					    <th scope="row">{$vo.name}</th>
 					    <td>{$vo.tel}</td>
 					    <td>{$vo.wechat}</td>
 					    <td>{$vo.company}</td>
+					    <td>{$vo.create_time}</td>
 					    <td>{$vo.address}</td>
 					    <td>{$vo.brand}</td>
 					    <td>
 						<a href="{:url('index/info',['id'=>$vo.id])}">查看</a> |
-						<a class='js-ajax-delete' href="{:url('index/del',['id'=>$vo.id])}">删除</a>
+						<a class='js-ajax-delete' href="{:url('index/del',['id'=>$vo.id])}">删除</a> | 
+						<a class='' href="{:url('index/star',['id'=>$vo.id,'star'=>$vo.star])}">🌟</a>
 					    </td>
 					</tr>
 					</foreach>

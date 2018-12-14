@@ -17,10 +17,10 @@
 	<include file="public@nav" />
 	<div class="container tc-main">
 	    <div class="row">
-		<div class="col-md-3">
+		<div class="col-md-2">
 		    <include file="public@agentnav"/>
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-10">
 		    <div class="tabs">
 			<ul class="nav nav-tabs">
 			    <li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 跟进代理</a></li>
@@ -59,9 +59,11 @@
 				<table class="table table-striped">
 				    <thead>
 					<tr>
+					    <th></th>
 					    <th>销售</th>
 					    <th>姓名</th>
 					    <th>电话</th>
+					    <th>添加日期</th>
 					    <th>更新时间</th>
 					    <th>公司</th>
 					    <th>地域</th>
@@ -72,9 +74,11 @@
 				    <tbody>
 					<foreach name='list' item='vo'>
 					<tr>
+					    <td><eq name='vo.star' value='1'><i class="fa fa-star"></i></eq></td>
 					    <th scope="row">{$childsSel[$vo.user_id]}</th>
 					    <th scope="row">{$vo.name}</th>
 					    <td>{$vo.tel}</td>
+					    <td>{:substr($vo.create_time,0,10)}</td>
 					    <td>{$vo.update_time}</td>
 					    <td>{$vo.company}</td>
 					    <td>{$vo.address}</td>

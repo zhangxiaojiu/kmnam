@@ -69,7 +69,7 @@ class IndexController extends UserBaseController
 	    $whereOr = session('search')[1];
 	}
 	$this->assign('where',$view);
-	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('update_time desc')->paginate(10);
+	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('star desc,update_time desc')->paginate(10);
 	foreach($list as $k => $v){
 	    $v['address'] = getAddress($v['address']);
 	    $list[$k] = $v;
@@ -153,6 +153,13 @@ class IndexController extends UserBaseController
 	$id = input('param.id',0);
 	$info = Db::name('agent')->where(['id'=>$id])->setField('state',0);
 	$this->success('删除成功');
+    }
+    public function star(){
+	$id = input('param.id',0);
+	$star = input('param.star',0);
+	$v = $star==0?1:0;
+	$info = Db::name('agent')->where(['id'=>$id])->setField('star',$v);
+	$this->redirect('index/index');
     }
     public function addFollow(){
 	$data = $this->request->post();
