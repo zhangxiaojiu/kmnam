@@ -69,7 +69,7 @@ class IndexController extends UserBaseController
 	    $whereOr = session('search')[1];
 	}
 	$this->assign('where',$view);
-	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('star desc,update_time desc')->paginate(10);
+	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('star desc,update_time desc,id desc')->paginate(10);
 	foreach($list as $k => $v){
 	    $v['address'] = getAddress($v['address']);
 	    $list[$k] = $v;
