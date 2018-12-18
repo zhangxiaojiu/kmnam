@@ -26,13 +26,17 @@ class IndexController extends UserBaseController
 	$company = input('param.company','');
 	$brand = input('param.brand','');
 	$address = input('param.address1','');
+	$create_time= input('param.create_time','');
+	$update_time = input('param.update_time','');
 	$view = [
 	    'name' => $name,
 	    'tel' => $tel,
 	    'wechat' => $wechat,
 	    'company' => $company,
 	    'brand' => $brand,
-	    'address' => $address
+	    'address' => $address,
+	    'create_time' => date('Y-m-d'),
+	    'update_time' => ''
 	];
 	if(!empty($name)){
 	    $where['name'] = $search['name'] = ['like','%'.$name.'%'];
@@ -59,6 +63,12 @@ class IndexController extends UserBaseController
 	    $where['address'] = $search['address'] = ['like',$address.'%'];
 	    $addressText = getAddress($address);
 	    $whereOr['address'] = ['like','%'.$addressText.'%'];
+	}
+	if(!empty($create_time)){
+	    $where['create_time'] = $search['create_time'] = ['like','%'.$create_time.'%'];
+	}
+	if(!empty($update_time)){
+	    $where['update_time'] = $search['update_time'] = ['like','%'.$update_time.'%'];
 	}
 	$page = input('param.page',0);
 	if($page == 0){

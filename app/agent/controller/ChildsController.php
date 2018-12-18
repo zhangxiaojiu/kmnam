@@ -27,13 +27,17 @@ class ChildsController extends UserBaseController
 	$company = input('param.company','');
 	$brand = input('param.brand','');
 	$address = input('param.address1','');
+	$create_time= input('param.create_time','');
+	$update_time = input('param.update_time','');
 	$view = [
 	    'name' => $name,
 	    'tel' => $tel,
 	    'wechat' => $wechat,
 	    'company' => $company,
 	    'brand' => $brand,
-	    'address' => $address
+	    'address' => $address,
+	    'create_time' => date('Y-m-d'),
+	    'update_time' => ''
 	];
 	$childs = Db::name('user')->where(['pid'=>$userId])->select();
 	$inArr = $childsSel = [];
@@ -79,6 +83,12 @@ class ChildsController extends UserBaseController
 	    $addressText = getAddress($address);
 	    $whereOr['address'] = ['like','%'.$addressText.'%'];
 	}
+	if(!empty($create_time)){
+	    $where['create_time'] = $search['create_time'] = ['like','%'.$create_time.'%'];
+	}
+	if(!empty($update_time)){
+	    $where['update_time'] = $search['update_time'] = ['like','%'.$update_time.'%'];
+	}
 	$page = input('param.page',0);
 	if($page == 0){
 	    session('search',[$search,$whereOr]);
@@ -88,7 +98,7 @@ class ChildsController extends UserBaseController
 	    $whereOr = session('search')[1];
 	}
 	$this->assign('where',$view);
-	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('update_time desc')->paginate(10);
+	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('star desc,update_time desc,id desc')->paginate(10);
 	foreach($list as $k => $v){
 	    $v['address'] = getAddress($v['address']);
 	    $list[$k] = $v;

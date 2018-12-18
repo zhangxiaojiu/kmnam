@@ -40,6 +40,10 @@
 				    <input type="text" class="form-control" name="company" style="width: 120px;" value="{$where.company|default=''}" placeholder="请输入公司">
 				    品牌:
 				    <input type="text" class="form-control" name="brand" style="width: 120px;" value="{$where.brand|default=''}" placeholder="请输入品牌">
+				    添加日期:
+				    <input class="form-control js-bootstrap-date valid" type="text" id="input-birthday" name="create_time" value="{$where.create_time|default='2018-12-01'}" aria-invalid="false">
+				    更新日期：
+				    <input class="form-control js-bootstrap-date valid" type="text" id="input-birthday" name="update_time" value="{$where.update_time|default=''}" aria-invalid="false">
 				    <br>
 				    <br>地域:
 				    <select class="form-control" name="address1" onchange="selAdd(this)">
@@ -57,7 +61,8 @@
 					    <th>电话</th>
 					    <th>微信</th>
 					    <th>公司</th>
-					    <th>时间</th>
+					    <th>添加日期</th>
+					    <th>更新时间</th>
 					    <th>地域</th>
 					    <th>品牌</th>
 					    <th>操作</th>
@@ -71,7 +76,8 @@
 					    <td>{$vo.tel}</td>
 					    <td>{$vo.wechat}</td>
 					    <td>{$vo.company}</td>
-					    <td>{$vo.create_time}</td>
+					    <td>{:substr($vo.create_time,0,10)}</td>
+					    <td>{:substr($vo.update_time,-14,14)}</td>
 					    <td>{$vo.address}</td>
 					    <td>{$vo.brand}</td>
 					    <td>
