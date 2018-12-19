@@ -35,7 +35,7 @@ class IndexController extends UserBaseController
 	    'company' => $company,
 	    'brand' => $brand,
 	    'address' => $address,
-	    'create_time' => date('Y-m-d'),
+	    'create_time' => '',
 	    'update_time' => ''
 	];
 	if(!empty($name)){

@@ -36,7 +36,7 @@ class ChildsController extends UserBaseController
 	    'company' => $company,
 	    'brand' => $brand,
 	    'address' => $address,
-	    'create_time' => date('Y-m-d'),
+	    'create_time' => '',
 	    'update_time' => ''
 	];
 	$childs = Db::name('user')->where(['pid'=>$userId])->select();
