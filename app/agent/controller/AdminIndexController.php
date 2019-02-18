@@ -115,6 +115,47 @@ class AdminIndexController extends AdminBaseController
 	$this->assign('list',$list);
         return $this->fetch();	
     }
+    public function outAgent(){
+	$where = session('search')[0];
+	$whereOr = session('search')[1];
+	$ret = Db::name('agent')->where($where)->whereOr($whereOr)->order('update_time desc')->select();
+
+	$userList = Db::name('user')->field('id,user_login')->select();
+	$uName = [];
+	foreach($userList as $uk => $uv){
+	    $uName[$uv['id']] = $uv['user_login'];
+	}
+	foreach ($ret as $v){
+	    $row = [];
+	    $uId = intval($v['user_id']);
+	    $row[] = $uName[$uId];
+	    $row[] = $v['name'];
+	    $row[] = $v['tel'];
+	    $row[] = $v['wechat'];
+	    $row[] = $v['address'].getAddress($v['address']);
+	    $row[] = $v['company'];
+	    $row[] = $v['brand'];
+	    $row[] = $v['remark'];
+	    $row[] = $v['update_time'];
+	    $row[] = $v['create_time'];
+	    $list[] = $row;
+	}
+	$fileName = date('YmdHis').mt_rand(100,999);
+	$sheetName = "代理商列表";
+	$title = [
+	    "A" => "所属销售",
+	    "B" => "姓名",
+	    "C" => "电话",
+	    "D" => "微信",
+	    "E" => "地址",
+	    "F" => "公司",
+	    "G" => "品牌",
+	    "H" => "备注",
+	    "I" => "最近跟进",
+	    "J" => "创建时间"
+	];
+	phpExcelXlsx($fileName,$sheetName,$title,$list);
+    }
     public function info(){
 	$id = input('param.id',0);
 	$info = Db::name('agent')->find($id);
