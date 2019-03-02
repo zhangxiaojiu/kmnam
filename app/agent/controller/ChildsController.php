@@ -84,10 +84,16 @@ class ChildsController extends UserBaseController
 	    $whereOr['address'] = ['like','%'.$addressText.'%'];
 	}
 	if(!empty($create_time)){
-	    $where['create_time'] = $search['create_time'] = ['like','%'.$create_time.'%'];
+	    $cDays = input('param.c_days','1');
+	    $beginCreateTime = $create_time.' 00:00:00';
+	    $endCreateTime = date("Y-m-d H:i:s",strtotime($beginCreateTime." + $cDays day"));
+	    $where['create_time'] = $search['create_time'] = ['between',[$beginCreateTime,$endCreateTime]];
 	}
 	if(!empty($update_time)){
-	    $where['update_time'] = $search['update_time'] = ['like','%'.$update_time.'%'];
+	    $uDays = input('param.u_days','1');
+	    $beginUpdateTime = $update_time.' 00:00:00';
+	    $endUpdateTime = date("Y-m-d H:i:s",strtotime($beginUpdateTime." + $uDays day"));
+	    $where['update_time'] = $search['update_time'] = ['between',[$beginUpdateTime,$endUpdateTime]];
 	}
 	$page = input('param.page',0);
 	if($page == 0){
