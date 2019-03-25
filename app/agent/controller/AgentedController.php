@@ -56,9 +56,8 @@ class AgentedController extends UserBaseController
 	    $a4 = !empty(input('param.address4',''))?','.input('param.address4'):'';
 	    $a5 = !empty(input('param.address5',''))?','.input('param.address5'):'';
 	    $address = $a1.$a2.$a3.$a4.$a5;
-	    $where['address'] = $search['address'] = ['like',$address.'%'];
 	    $addressText = getAddress($address);
-	    $whereOr['address'] = ['like','%'.$addressText.'%'];
+	    $whereOr = "address like '%".$addressText."%' OR address like '".$address."%'";
 	}
 	$page = input('param.page',0);
 	if($page == 0){
@@ -69,7 +68,7 @@ class AgentedController extends UserBaseController
 	    $whereOr = session('search')[1];
 	}
 	$this->assign('where',$view);
-	$list = Db::name('agented')->where($where)->whereOr($whereOr)->order('update_time desc')->paginate(10);
+	$list = Db::name('agented')->where($where)->where($whereOr)->order('update_time desc')->paginate(10);
 	foreach($list as $k => $v){
 	    $v['address'] = getAddress($v['address']);
 	    $list[$k] = $v;

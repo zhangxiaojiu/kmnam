@@ -18,8 +18,8 @@ class IndexController extends UserBaseController
         $user = cmf_get_current_user();
         $this->assign($user);
 	$userId = $user['id'];
-	$whereOr = [];
 	$where = $search = ['user_id'=>$userId,'state'=>1];
+	$whereOr = [];
 	$name = input('param.name','');
 	$tel = input('param.tel','');
 	$wechat = input('param.wechat','');
@@ -53,17 +53,7 @@ class IndexController extends UserBaseController
 	if(!empty($brand)){
 	    $where['brand'] = $search['brand'] = ['like','%'.$brand.'%'];
 	}
-	if($address !== ''){
-	    $a1 = $address;
-	    $a2 = !empty(input('param.address2',''))?','.input('param.address2'):'';
-	    $a3 = !empty(input('param.address3',''))?','.input('param.address3'):'';
-	    $a4 = !empty(input('param.address4',''))?','.input('param.address4'):'';
-	    $a5 = !empty(input('param.address5',''))?','.input('param.address5'):'';
-	    $address = $a1.$a2.$a3.$a4.$a5;
-	    $where['address'] = $search['address'] = ['like',$address.'%'];
-	    $addressText = getAddress($address);
-	    $whereOr['address'] = ['like','%'.$addressText.'%'];
-	}
+	
 	if(!empty($create_time)){
 	    $cDays = input('param.c_days','1');
 	    $beginCreateTime = $create_time.' 00:00:00';
@@ -76,6 +66,16 @@ class IndexController extends UserBaseController
 	    $endUpdateTime = date("Y-m-d H:i:s",strtotime($beginUpdateTime." + $uDays day"));
 	    $where['update_time'] = $search['update_time'] = ['between',[$beginUpdateTime,$endUpdateTime]];
 	}
+	if($address !== ''){
+	    $a1 = $address;
+	    $a2 = !empty(input('param.address2',''))?','.input('param.address2'):'';
+	    $a3 = !empty(input('param.address3',''))?','.input('param.address3'):'';
+	    $a4 = !empty(input('param.address4',''))?','.input('param.address4'):'';
+	    $a5 = !empty(input('param.address5',''))?','.input('param.address5'):'';
+	    $address = $a1.$a2.$a3.$a4.$a5;
+	    $addressText = getAddress($address);
+	    $whereOr = "address like '%".$addressText."%' OR address like '".$address."%'";
+	}
 	$page = input('param.page',0);
 	if($page == 0){
 	    session('search',[$search,$whereOr]);
@@ -85,7 +85,7 @@ class IndexController extends UserBaseController
 	    $whereOr = session('search')[1];
 	}
 	$this->assign('where',$view);
-	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('star desc,update_time desc,id desc')->paginate(10);
+	$list = Db::name('agent')->where($where)->where($whereOr)->order('star desc,update_time desc,id desc')->paginate(10);
 	foreach($list as $k => $v){
 	    $v['address'] = getAddress($v['address']);
 	    $list[$k] = $v;
