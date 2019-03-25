@@ -72,17 +72,7 @@ class ChildsController extends UserBaseController
 	if(!empty($brand)){
 	    $where['brand'] = $search['brand'] = ['like','%'.$brand.'%'];
 	}
-	if($address !== ''){
-	    $a1 = $address;
-	    $a2 = !empty(input('param.address2',''))?','.input('param.address2'):'';
-	    $a3 = !empty(input('param.address3',''))?','.input('param.address3'):'';
-	    $a4 = !empty(input('param.address4',''))?','.input('param.address4'):'';
-	    $a5 = !empty(input('param.address5',''))?','.input('param.address5'):'';
-	    $address = $a1.$a2.$a3.$a4.$a5;
-	    $where['address'] = $search['address'] = ['like',$address.'%'];
-	    $addressText = getAddress($address);
-	    $whereOr['address'] = ['like','%'.$addressText.'%'];
-	}
+	
 	if(!empty($create_time)){
 	    $cDays = input('param.c_days','1');
 	    $beginCreateTime = $create_time.' 00:00:00';
@@ -95,6 +85,16 @@ class ChildsController extends UserBaseController
 	    $endUpdateTime = date("Y-m-d H:i:s",strtotime($beginUpdateTime." + $uDays day"));
 	    $where['update_time'] = $search['update_time'] = ['between',[$beginUpdateTime,$endUpdateTime]];
 	}
+	if($address !== ''){
+	    $a1 = $address;
+	    $a2 = !empty(input('param.address2',''))?','.input('param.address2'):'';
+	    $a3 = !empty(input('param.address3',''))?','.input('param.address3'):'';
+	    $a4 = !empty(input('param.address4',''))?','.input('param.address4'):'';
+	    $a5 = !empty(input('param.address5',''))?','.input('param.address5'):'';
+	    $address = $a1.$a2.$a3.$a4.$a5;
+	    $addressText = getAddress($address);
+	    $whereOr = "address like '%".$addressText."%' OR address like '".$address."%'";
+	}
 	$page = input('param.page',0);
 	if($page == 0){
 	    session('search',[$search,$whereOr]);
@@ -104,7 +104,7 @@ class ChildsController extends UserBaseController
 	    $whereOr = session('search')[1];
 	}
 	$this->assign('where',$view);
-	$list = Db::name('agent')->where($where)->whereOr($whereOr)->order('star desc,update_time desc,id desc')->paginate(10);
+	$list = Db::name('agent')->where($where)->where($whereOr)->order('star desc,update_time desc,id desc')->paginate(10);
 	foreach($list as $k => $v){
 	    $v['address'] = getAddress($v['address']);
 	    $list[$k] = $v;
@@ -170,9 +170,8 @@ class ChildsController extends UserBaseController
 	    $a4 = !empty(input('param.address4',''))?','.input('param.address4'):'';
 	    $a5 = !empty(input('param.address5',''))?','.input('param.address5'):'';
 	    $address = $a1.$a2.$a3.$a4.$a5;
-	    $where['address'] = $search['address'] = ['like',$address.'%'];
 	    $addressText = getAddress($address);
-	    $whereOr['address'] = ['like','%'.$addressText.'%'];
+	    $whereOr = "address like '%".$addressText."%' OR address like '".$address."%'";
 	}
 	$page = input('param.page',0);
 	if($page == 0){
@@ -183,7 +182,7 @@ class ChildsController extends UserBaseController
 	    $whereOr = session('search')[1];
 	}
 	$this->assign('where',$view);
-	$list = Db::name('agented')->where($where)->whereOr($whereOr)->order('update_time desc')->paginate(10);
+	$list = Db::name('agented')->where($where)->where($whereOr)->order('update_time desc')->paginate(10);
 	foreach($list as $k => $v){
 	    $v['address'] = getAddress($v['address']);
 	    $list[$k] = $v;
