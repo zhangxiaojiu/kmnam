@@ -11,6 +11,10 @@ class IndexController extends UserBaseController
 
     function _initialize()
     {
+	$nId = getNavId();
+	if($nId !== 2){
+	    die('无权访问');
+	}
         parent::_initialize();
     }
     public function index()

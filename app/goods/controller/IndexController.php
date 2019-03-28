@@ -11,6 +11,10 @@ class IndexController extends UserBaseController
     {
         $user = cmf_get_current_user();
         $this->assign($user);
+	$nId = getNavId();
+	if($nId !== 3){
+	    die('无权访问');
+	}
         parent::_initialize();
     }
     public function index(){
