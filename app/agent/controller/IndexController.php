@@ -29,6 +29,7 @@ class IndexController extends UserBaseController
 	$wechat = input('param.wechat','');
 	$company = input('param.company','');
 	$brand = input('param.brand','');
+	$mark_color= input('param.mark_color','');
 	$address = input('param.address1','');
 	$create_time= input('param.create_time','');
 	$update_time = input('param.update_time','');
@@ -56,6 +57,9 @@ class IndexController extends UserBaseController
 	}
 	if(!empty($brand)){
 	    $where['brand'] = $search['brand'] = ['like','%'.$brand.'%'];
+	}
+	if(!empty($mark_color)){
+	    $where['mark_color'] = $search['mark_color'] = $mark_color;
 	}
 	
 	if(!empty($create_time)){
@@ -245,6 +249,16 @@ class IndexController extends UserBaseController
 	    // 上传失败获取错误信息
 	    $this->error( $file->getError());
 	}
+    }
+    public function markColor(){
+	$data = $this->request->post();
+	if(!$id = $data['id']){
+	    $this->error('wrong id');
+	}
+	$table = $data['table'];
+	unset($data['table']);
+	Db::name($table)->update($data);
+	$this->redirect('index');
     }
 
     public function checkAgentOwn($id){
