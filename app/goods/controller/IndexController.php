@@ -14,7 +14,7 @@ class IndexController extends UserBaseController
         parent::_initialize();
     }
     public function index(){
-	$list = Db::name('goods')->select();
+	$list = Db::name('goods')->where(['status'=>1])->select();
 	$this->assign('list',$list);
 	return $this->fetch();
     }
@@ -39,7 +39,7 @@ class IndexController extends UserBaseController
     }
     public function del(){
 	$id = input('param.id',0);
-	$info = Db::name('goods')->delete($id);
+	$info = Db::name('goods')->where(['id'=>$id])->setField('status',0);
 	$this->success('删除成功');
     }
     public function in(){
