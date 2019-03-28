@@ -13,7 +13,8 @@
 
         <div class="collapse navbar-collapse active" id="bs-example-navbar-collapse-1">
             <ul id="main-menu" class="nav navbar-nav">
-                <navigation nav-id="" root="" id="main-navigation" class="nav navbar-nav navbar-nav-custom"
+		<php>$navId=getNavId(1);</php>
+		<navigation nav-id="$navId" root="" id="main-navigation" class="nav navbar-nav navbar-nav-custom"
                             max-level="0">
                     <navigationMenu>
                         <if condition="$level gt 1">

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>{$user_login} - 货物总览</title>
+	<meta name="keywords" content=""/>
+	<meta name="description" content="">
+	<include file="public@head"/>
+	<style>
+.control-label {
+    font-weight: bold;
+    float: left;
+    width: 70px;
+}
+	</style>
+    </head>
+    <body class="body-white" id="top">
+	<include file="public@nav" />
+	<div class="container tc-main">
+	    <div class="row">
+		<div class="col-md-2">
+		    <include file="public@goodsnav"/>
+		</div>
+		<div class="col-md-10">
+		    <ul class="nav nav-tabs">
+			<li><a href="{:url('index/index')}"><i class="fa fa-home"></i> 总览</a></li>
+			<li><a href="#two" data-toggle="tab"><i class="fa fa-home"></i> 新增</a></li>
+		    </ul>
+		    <div class="tab-content">
+			<div class="tab-pane active" id="one">
+			    	<table class="table table-striped">
+				    <thead>
+					<tr>
+					    <h3>品牌：{$info.brand}  <i>当前库存：{$info.quantity}</i></h3>
+					</tr>
+					<tr>
+					    <th>操作</th>
+					    <th>数量</th>
+					    <th>时间</th>
+					    <th>详情</th>
+					</tr>
+				    </thead>
+				    <php>$types = ['in'=>'进货','out'=>'出货'];</php>
+				    <tbody>
+					<foreach name='list' item='vo'>
+					<tr>
+					    <td>{$types[$vo.type]}</td>
+					    <td>{$vo.quantity}</td>
+					    <td>{$vo.add_time}</td>
+					    <td>{$vo.express_num}{$vo.express_info}</td>
+					</tr>
+					</foreach>
+				    </tbody>
+				</table>
+
+			</div>
+			<div class="tab-pane" id="two">
+			    <form class="js-ajax-form" action="{:url('Index/add')}" method="post">
+				<div class="form-group">
+				    <label>品牌</label>
+				    <input name="brand" type="text" class="form-control">
+				</div>
+				<div class="form-group">
+				    <button type="submit" class="btn btn-primary js-ajax-submit">新增</button>
+				</div>
+			    </form>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <include file="public@footer" />
+	</div>
+	<!-- /container -->
+	<include file="public@scripts" />
+    </body>
+</html>

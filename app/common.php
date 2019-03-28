@@ -29,6 +29,19 @@ function getUsernameByid($id){
     $ret = Db::name('user')->where(['id'=>$id])->value('user_login');
     return $ret;
 }
+function getNavId($nId=1){
+    $uid = session('user.id');
+    if($uid){
+	$roleName = Db::name('role')->alias('r')->join('kam_role_user ru','r.id = ru.role_id')->where("user_id = $uid")->value('name');
+	if($roleName == '销售'){
+	    $nId = 2;
+	}
+	if($roleName == '前台'){
+	    $nId = 3;
+	}
+    }
+    return intval($nId);
+}
 //phpexcel
 function phpExcelXlsx($fileName,$sheetName,$title,$list){
     require_once '../simplewind/vendor/phpoffice/phpexcel/Classes/PHPExcel.php';

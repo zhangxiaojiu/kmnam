@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>{$user_login} - 货物总览</title>
+	<meta name="keywords" content=""/>
+	<meta name="description" content="">
+	<include file="public@head"/>
+	<style>
+.control-label {
+    font-weight: bold;
+    float: left;
+    width: 70px;
+}
+	</style>
+    </head>
+    <body class="body-white" id="top">
+	<include file="public@nav" />
+	<div class="container tc-main">
+	    <div class="row">
+		<div class="col-md-2">
+		    <include file="public@goodsnav"/>
+		</div>
+		<div class="col-md-10">
+		    <form class="js-ajax-form" action="" method="post">
+			<div class="form-group">
+			    <label>品牌</label>
+			    <select class="form-control" name='goods_id'>
+				<foreach name='list' item='vo'>
+				<option value='{$vo.id}'>{$vo.brand}</option>
+				</foreach>
+			    </select>
+			</div>
+			<div class="form-group">
+			    <label>数量</label>
+			    <input type="text" class="form-control" id="input-tel" placeholder="" name="quantity" value="" required>
+			</div>
+			<div class="form-group">
+			    <label>单号</label>
+			    <input type="text" class="form-control" id="input-tel" placeholder="" name="express_num" value="" required>
+			</div>
+			<div class="form-group">
+			    <label>收货信息</label>
+			    <textarea class="form-control" placeholder="" name="express_info" value=""></textarea>
+			</div>
+			<div class="form-group">
+			    <button type="submit" class="btn btn-primary js-ajax-submi">出货</button>
+			</div>
+		    </form>
+		</div>
+	    </div>
+	    <include file="public@footer" />
+	</div>
+	<!-- /container -->
+	<include file="public@scripts" />
+    </body>
+</html>

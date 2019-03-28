@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>{$user_login} - 货物总览</title>
+	<meta name="keywords" content=""/>
+	<meta name="description" content="">
+	<include file="public@head"/>
+	<style>
+.control-label {
+    font-weight: bold;
+    float: left;
+    width: 70px;
+}
+	</style>
+    </head>
+    <body class="body-white" id="top">
+	<include file="public@nav" />
+	<div class="container tc-main">
+	    <div class="row">
+		<div class="col-md-2">
+		    <include file="public@goodsnav"/>
+		</div>
+		<div class="col-md-10">
+		    <ul class="nav nav-tabs">
+			<li class="active"><a href="#one" data-toggle="tab"><i class="fa fa-home"></i> 总览</a></li>
+			<li class=><a href="#two" data-toggle="tab"><i class="fa fa-home"></i> 新增</a></li>
+		    </ul>
+		    <div class="tab-content">
+			<div class="tab-pane active" id="one">
+			    	<table class="table table-striped">
+				    <thead>
+					<tr>
+					    <th>品牌</th>
+					    <th>数量</th>
+					    <th>操作</th>
+					</tr>
+				    </thead>
+				    <tbody>
+					<foreach name='list' item='vo'>
+					<tr>
+					    <td>{$vo.brand}</td>
+					    <td>{$vo.quantity}</td>
+					    <td>
+						<a href="{:url('index/info',['id'=>$vo.id])}">查看</a> |
+						<a class='js-ajax-delete' href="{:url('index/del',['id'=>$vo.id])}">删除</a> 
+					    </td>
+					</tr>
+					</foreach>
+				    </tbody>
+				</table>
+
+			</div>
+			<div class="tab-pane" id="two">
+			    <form class="js-ajax-form" action="{:url('Index/add')}" method="post">
+				<div class="form-group">
+				    <label>品牌</label>
+				    <input name="brand" type="text" class="form-control">
+				</div>
+				<div class="form-group">
+				    <button type="submit" class="btn btn-primary js-ajax-submit">新增</button>
+				</div>
+			    </form>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	    <include file="public@footer" />
+	</div>
+	<!-- /container -->
+	<include file="public@scripts" />
+    </body>
+</html>
