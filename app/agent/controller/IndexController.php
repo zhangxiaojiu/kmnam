@@ -58,7 +58,7 @@ class IndexController extends UserBaseController
         if (!empty($company)) {
             $where['company'] = $search['company'] = ['like', '%' . $company . '%'];
         }
-        if (!empty($brand)) {
+        if (!empty($remark)) {
             $where['brand'] = $search['brand'] = ['like', '%' . $brand . '%'];
         }
         if (!empty($remark)) {
