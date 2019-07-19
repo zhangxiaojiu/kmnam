@@ -1,4 +1,4 @@
-ThinkCMF遵循Apache2开源协议发布，并提供免费使用。
+ThinkCMF遵循Apache2开源协议发布，并提供免费使用。xx
 版权所有Copyright © 2013-2018 by ThinkCMF (https://www.thinkcmf.com)
 All rights reserved。
 
