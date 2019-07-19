@@ -4,3 +4,4 @@ _*
 cscope*
 /data/conf/database.conf
 /public/upload
+.idea/

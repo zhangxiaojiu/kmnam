@@ -48,6 +48,8 @@
 					<option value='bg-green'>绿色</option>
 					<option value='bg-blue'>蓝色</option>
 				    </select>
+                    备注：
+                    <input type="text" class="form-control" name="remark" style="width: 120px;" value="{$where.remark|default=''}" placeholder="请输入备注关键字">
 
 				    <br><br>添加日期：
 				    <input class="form-control js-bootstrap-date valid" type="text" id="input-birthday" name="create_time" value="{$where.create_time|default=''}" aria-invalid="false">
